@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Card({ User, Message }) {
     return (
-        <div className='flex flex-col min-w-[100%] min-h-[100px] bg-slate-500 rounded-xl p-2 shadow-md'>
+        <div className='flex flex-col min-w-[100%] min-h-[100px] rounded-xl p-2 shadow-inner shadow-current'>
             < div className='flex '>
                 < div className='min-w-[10%] items-center mx-auto' >
                     <Image className='w-[50px] h-[50px] bg-red-200 rounded-full self-center' />

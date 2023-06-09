@@ -12,9 +12,9 @@ export default function Card({ User, Message }) {
                     <span className='font-medium text-3xl'>{User}</span>
                     <p>{Message}</p>
                 </div>
-                {/* buttons for interaction */}
             </div >
             <div className='flex w-[100%] justify-end gap-2'>
+                {/* buttons for interaction */}
                 <div className='flex gap-1'>1000 <span>C</span></div>
                 <div className='flex gap-1'>1000 <span>L</span></div>
                 <div className='flex gap-1'><span>G</span></div>

@@ -1,7 +1,11 @@
 "use client"
-import logo from '@/app/logo.svg'
+import logo from '@/app/icons/logo.svg'
 import Image from 'next/image';
 import Link from 'next/link';
+import IconHome from '@/app/icons/Home';
+import IconPerson from '@/app/icons/Profile';
+import IconSetting from '@/app/icons/Setting';
+import IconDark from '@/app/icons/Dark';
 
 export default function Navbar() {
     return (
@@ -15,14 +19,14 @@ export default function Navbar() {
                 {/* Menu */}
                 <div className='flex flex-col gap-2'>
                     {/* botones */}
-                    <Link href={"/"} className='w-[100%] min-h-[30%]'><span></span> Explore</Link>
-                    <Link href={"/"} className='w-[100%] min-h-[30%]'><span></span> Profile</Link>
-                    <Link href={"/"} className='w-[100%] min-h-[30%]'><span></span> Settings</Link>
+                    <Link href={"/explore"} className='w-[100%] min-h-[30%]'><IconHome /><span>Explore</span></Link>
+                    <Link href={"/profile"} className='w-[100%] min-h-[30%]'><IconPerson /><span>Profile</span> </Link>
+                    <Link href={"/settings"} className='w-[100%] min-h-[30%]'><IconSetting /><span>Settings</span> </Link>
                 </div>
             </div>
             <div className='flex flex-col gap-2'>
                 {/* botones */}
-                <div className='w-[100%] min-h-[30%]'><span></span> Oscuro</div>
+                <div className='w-[100%] min-h-[30%]'><IconDark /><span></span> Oscuro</div>
             </div>
         </div>
     )

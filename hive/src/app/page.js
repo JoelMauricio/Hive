@@ -2,6 +2,7 @@ import Card from '@/app/components/general/Card';
 import Navbar from '@/app/components/general/Navbar';
 import { dPadding } from '@/app/constants';
 import Image from 'next/image';
+import IconSend from '@/app/icons/Send';
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
                 <span className='font-medium text-xl'>Write your thoughts...</span>
                 <div className='flex gap-2 h-[100%]'>
                   <div className='min-w-[90%] min-h-[30px] h-[100%] rounded-md bg-slate-500'></div>
-                  <div className='min-w-[10%] min-h-[30px] h-[100%] rounded-md bg-gray-100'></div>
+                  <div className='min-w-[10%] min-h-[30px] h-[100%] rounded-md'><IconSend /></div>
                 </div>
               </div>
             </div >

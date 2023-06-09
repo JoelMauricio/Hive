@@ -1,5 +1,8 @@
 "use client"
 import Image from 'next/image'
+import ChatIcon from "@/app/icons/ChatIcon"
+import IconHeart from '@/app/icons/Like';
+import IconBookmark from '@/app/icons/save';
 
 export default function Card({ User, Message }) {
     return (
@@ -15,9 +18,9 @@ export default function Card({ User, Message }) {
             </div >
             <div className='flex w-[100%] justify-end gap-2'>
                 {/* buttons for interaction */}
-                <div className='flex gap-1'>1000 <span>C</span></div>
-                <div className='flex gap-1'>1000 <span>L</span></div>
-                <div className='flex gap-1'><span>G</span></div>
+                <div className='flex gap-1'><span>1000</span><ChatIcon /></div>
+                <div className='flex gap-1'><span>1000</span><IconHeart /></div>
+                <div className='flex gap-1'><IconBookmark /></div>
             </div>
         </div >
     );

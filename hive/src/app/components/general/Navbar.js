@@ -19,14 +19,14 @@ export default function Navbar() {
                 {/* Menu */}
                 <div className='flex flex-col gap-2'>
                     {/* botones */}
-                    <Link href={"/explore"} className='w-[100%] min-h-[30%]'><IconHome /><span>Explore</span></Link>
-                    <Link href={"/profile"} className='w-[100%] min-h-[30%]'><IconPerson /><span>Profile</span> </Link>
-                    <Link href={"/settings"} className='w-[100%] min-h-[30%]'><IconSetting /><span>Settings</span> </Link>
+                    <Link href={"/explore"} className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconHome className="w-[1.5rem] h-[1.5rem]" /><span className='text-[1.4rem]'>Explore</span></Link>
+                    <Link href={"/profile"} className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconPerson className="w-[1.5rem] h-[1.5rem]" /><span className='text-[1.4rem]'>Profile</span> </Link>
+                    <Link href={"/settings"} className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconSetting className="w-[1.5rem] h-[1.5rem]" /><span className='text-[1.4rem]'>Settings</span> </Link>
                 </div>
             </div>
             <div className='flex flex-col gap-2'>
                 {/* botones */}
-                <div className='w-[100%] min-h-[30%]'><IconDark /><span></span> Oscuro</div>
+                <div className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconDark className="w-[1.5rem] h-[1.5rem]" /><span className='text-[1.4rem]'>Oscuro</span> </div>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "api": "node src/app/api/server.js",
+    "api": "node src/server/api.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

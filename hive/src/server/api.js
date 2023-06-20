@@ -18,7 +18,7 @@ app.get('/api/users', getUserData);
 
 app.post('/api/register', async (req, res) => {
   try {
-    const { email, username, password } = req.body; // Assuming the request body contains the arguments
+    const { email, username, password } = req.body; 
 
     const result = await registerUser(email, username, password);
 
@@ -31,7 +31,7 @@ app.post('/api/register', async (req, res) => {
 
 app.post('/api/update/display', async (req, res) => {
   try {
-    const { user, display } = req.body; // Assuming the request body contains the arguments
+    const { user, display } = req.body; 
 
     const result = await updateDisplay(user, display);
 
@@ -44,7 +44,7 @@ app.post('/api/update/display', async (req, res) => {
 
 app.post('/api/update/about', async (req, res) => {
   try {
-    const { user, about } = req.body; // Assuming the request body contains the arguments
+    const { user, about } = req.body; 
 
     const result = await updateAbout(user, about);
 
@@ -57,7 +57,7 @@ app.post('/api/update/about', async (req, res) => {
 
 app.post('/api/update/avatar', async (req, res) => {
   try {
-    const { user, avatar } = req.body; // Assuming the request body contains the arguments
+    const { user, avatar } = req.body; 
 
     const result = await updateAvatar(user, avatar);
 
@@ -70,7 +70,7 @@ app.post('/api/update/avatar', async (req, res) => {
 
 app.post('/api/update/password', async (req, res) => {
   try {
-    const { user, password } = req.body; // Assuming the request body contains the arguments
+    const { user, password } = req.body; 
 
     const result = await updatePassword(user, password);
 
@@ -83,7 +83,7 @@ app.post('/api/update/password', async (req, res) => {
 
 app.post('/api/update/username', async (req, res) => {
   try {
-    const { user, username } = req.body; // Assuming the request body contains the arguments
+    const { user, username } = req.body; 
 
     const result = await updateUsername(user, username);
 
@@ -96,7 +96,7 @@ app.post('/api/update/username', async (req, res) => {
 
 app.post('/api/update/email', async (req, res) => {
   try {
-    const { user, email } = req.body; // Assuming the request body contains the arguments
+    const { user, email } = req.body; 
 
     const result = await updateEmail(user, email);
 

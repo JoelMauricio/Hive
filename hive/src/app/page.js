@@ -10,18 +10,18 @@ export default function Home() {
     <main className="flex min-h-screen w-[75%] flex-col items-center justify-between justify-self-center mx-auto bg-red">
       <div className='w-full h-screen flex'>
         <Navbar />
-        <div className='min-h-screen w-[60%]  flex flex-col px-1 py-5 gap-2'>
+        <div className='min-h-screen w-[60%]  flex flex-col px-2 py-5 gap-1'>
           <h1>What's new?</h1>
-          <div className='flex flex-col min-w-[100%] h-fit  p-2 '>
+          <div className='flex flex-col min-w-[100%] h-fit py-1 px-2 '>
             < div className='flex '>
               < div className='min-w-[10%] items-center mx-auto' >
                 <Image className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' />
               </div >
               <div className='flex flex-col min-w-[90%] gap-2 p-2 pr-4'>
-                <span className='font-medium text-xl'>Write your thoughts...</span>
+                <span className='font-medium text-[1rem]'>Write your thoughts...</span>
                 <div className='flex gap-2 h-[100%]'>
-                  <div className='min-w-[90%] min-h-[30px] h-[100%] rounded-md bg-white shadow-inherit' style={{ "box-shadow": "0px 4px 4px 0px;" }}></div>
-                  <div className='min-w-[10%] min-h-[30px] h-[100%] rounded-md grid items-center justify-center bg-[#FF9858]'><IconSend /></div>
+                  <input type="text" name="newMessage" className='min-w-[90%] min-h-[25px] h-[100%] rounded-md bg-white shadow-inherit' style={{ "box-shadow": "0px 4px 4px 0px;" }}></input>
+                  <div className='min-w-[10%] min-h-[25px] h-[100%] rounded-md grid items-center justify-center bg-[#FF9858]'><IconSend /></div>
                 </div>
               </div>
             </div >

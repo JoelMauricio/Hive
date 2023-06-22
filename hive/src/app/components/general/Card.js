@@ -6,10 +6,10 @@ import IconBookmark from '@/app/icons/save';
 
 export default function Card({ User, Message }) {
     return (
-        <div className='flex flex-col min-w-[100%] min-h-[100px] rounded-xl p-2 shadow-inner shadow-current'>
+        <div className='flex flex-col min-w-[100%] min-h-[100px] p-2 shadow-current' style={{ "box-shadow": " 0px 2px 4px 0px;" }} >
             < div className='flex'>
                 < div className='min-w-[10%]' >
-                    <Image className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' />
+                    <Image className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' />
                 </div >
                 <div className='flex flex-col min-w-[90%] p-2 pr-4'>
                     <span className='font-medium text-3xl'>{User}</span>

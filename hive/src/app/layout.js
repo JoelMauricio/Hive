@@ -1,5 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Navbar from './components/general/Navbar'
+import SearchBar from './components/general/Searchbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,7 +13,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className="flex min-h-screen w-[75%] flex-col items-center justify-between justify-self-center mx-auto bg-red">
+          <div className='w-full h-screen flex'>
+            <Navbar />
+            <div className='min-h-screen w-[60%]  flex flex-col px-2 py-5 gap-1'>
+              {children}
+            </div>
+            <div className='min-h-screen w-[20%] flex flex-col px-3 py-5 border-x border-slate-50 justify-between'>
+
+              <SearchBar />
+            </div>
+          </div >
+        </main >
+      </body>
     </html>
   )
 }

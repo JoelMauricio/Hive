@@ -6,8 +6,16 @@ import IconHome from '@/app/icons/Home';
 import IconPerson from '@/app/icons/Profile';
 import IconSetting from '@/app/icons/Setting';
 import IconDark from '@/app/icons/Dark';
+import IconBookmarkFill from '@/app/icons/Saved';
+import { useRouter } from 'next/navigation';
+
 
 export default function Navbar() {
+
+    const IconStyling = "w-[1.4rem] h-[1.4rem]";
+    const LinkStyle = 'w-[100%] min-h-[30%] flex gap-4 items-center p-2 focus:outline-none focus:text-red-500';
+    const TextStyle = 'text-[1.2rem]';
+
     return (
         <div className='min-h-screen w-[20%] flex flex-col px-3 py-5 border-x border-slate-50 justify-between'>
             <div className='flex flex-col gap-5'>
@@ -19,13 +27,14 @@ export default function Navbar() {
                 {/* Menu */}
                 <div className='flex flex-col gap-1'>
                     {/* botones */}
-                    <Link href={"/"} className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconHome className="w-[1.4rem] h-[1.4rem]" /><span className='text-[1.2rem]'>Explore</span></Link>
-                    <Link href={"/profile"} className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconPerson className="w-[1.4rem] h-[1.4rem]" /><span className='text-[1.2rem]'>Profile</span> </Link>
+                    <Link href={"/"} className={LinkStyle}><IconHome className={IconStyling} /><span className={TextStyle}>Explore</span></Link>
+                    <Link href={"/profile"} className={LinkStyle}><IconPerson className={IconStyling} /><span className={TextStyle}>Profile</span> </Link>
+                    <Link href={"/favorites"} className={LinkStyle}><IconBookmarkFill className={IconStyling} /><span className={TextStyle}>Favorites</span> </Link>
                 </div>
             </div>
             <div className='flex flex-col gap-1'>
                 {/* botones */}
-                <button className='w-[100%] min-h-[30%] flex gap-4 items-center p-2'><IconDark className="w-[1.4rem] h-[1.4rem]" /><span className='text-[1.2rem]'>Oscuro</span> </button>
+                <button className={LinkStyle}><IconDark className={IconStyling} /><span className={TextStyle}>Oscuro</span> </button>
             </div>
         </div >
     )

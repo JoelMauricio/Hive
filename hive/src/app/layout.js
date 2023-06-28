@@ -2,6 +2,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from './components/general/Navbar'
 import SearchBar from './components/general/Searchbar'
+import UserCard from './components/general/UserCard'
+import { placeholder } from './constants'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,8 +23,14 @@ export default function RootLayout({ children }) {
               {children}
             </div>
             <div className='min-h-screen w-[25%] flex flex-col px-3 py-5  justify-between'>
-
-              <SearchBar text={"Search accounts"} />
+              <SearchBar text={"Search accounts"} className="mb-2" />
+              <div className='flex flex-col w-full h-full overflow-y-auto mt-4 gap-2'>
+                {
+                  placeholder.map((user, index) => (
+                    <UserCard key={index} UserId={user.userId} User={user.user} />
+                  ))
+                }
+              </div>
             </div>
           </div >
         </main >

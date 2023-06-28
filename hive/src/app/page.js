@@ -1,9 +1,5 @@
 import Card from '@/app/components/general/Card';
-import Navbar from '@/app/components/general/Navbar';
-import { dPadding } from '@/app/constants';
 import Image from 'next/image';
-import IconSend from '@/app/icons/Send';
-import SearchBar from '@/app/components/general/Searchbar';
 import InputBar from './components/general/CustomInput';
 import { placeholder } from '@/app/constants';
 

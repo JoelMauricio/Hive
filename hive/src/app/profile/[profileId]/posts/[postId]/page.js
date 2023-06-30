@@ -6,7 +6,9 @@ import { placeholder } from "@/app/constants"
 
 export default function Page({ params }) {
     return (<>
-        <Card User={params.postId} />
+        <div className='grid w-full h-fit'>
+            <Card User={params.postId} />
+        </div>
         <div className='grid w-full h-full items-center overflow-y-auto'>
             <div className='flex flex-col w-[80%] h-full m-auto gap-2'>
                 {

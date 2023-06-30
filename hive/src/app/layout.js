@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
             </div>
             <div className='min-h-screen w-[25%] flex flex-col px-3 py-5  justify-between'>
               <SearchBar text={"Search accounts"} className="mb-2" />
-              <div className='flex flex-col w-full h-full overflow-y-auto mt-4 gap-2'>
+              <div className='flex flex-col w-full h-full overflow-y-auto mt-4 gap-2 last group'>
                 {
                   placeholder.map((user, index) => (
                     <UserCard key={index} UserId={user.userId} User={user.user} />

@@ -10,9 +10,9 @@ import IconBookmarkFill from '@/app/icons/Saved';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
-    const IconStyling = "w-[1.4rem] h-[1.4rem]";
-    const LinkStyle = 'w-[100%] min-h-[30%] flex gap-4 items-center p-2 focus:outline-none focus:font-bold focus:min-h-[32%]';
-    const TextStyle = 'text-[1.2rem]';
+    const IconStyling = "w-[1.4rem] h-[1.4rem] group-hover:fill-[#FF9858]";
+    const LinkStyle = 'w-[100%] min-h-[30%] flex gap-4 items-center p-2 focus:outline-none focus:font-bold focus:min-h-[32%] group';
+    const TextStyle = 'text-[1.2rem] group-hover:text-[#FF9858]';
 
     return (
         <div className='min-h-screen w-[25%] flex flex-col px-3 py-5 justify-between'>
@@ -30,11 +30,6 @@ export default function Navbar() {
                     <Link href={"/favorites"} className={LinkStyle}><IconBookmarkFill className={IconStyling} /><span className={TextStyle}>Favorites</span> </Link>
                 </div>
             </div>
-            {/*
-            <div className='flex flex-col gap-1'>
-                <button className={LinkStyle}><IconDark className={IconStyling} /><span className={TextStyle}>Oscuro</span> </button>
-            </div>
-            */}
         </div >
     )
 }

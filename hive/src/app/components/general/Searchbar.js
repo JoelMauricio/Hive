@@ -20,11 +20,11 @@ const SearchBar = ({ text, icon = true, onSearch }) => {
                 className="shadow appearance-none border-2 border-mainBlack rounded-md w-[100%] h-full py-2 px-1 text-[.8rem] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             {icon ? (
-                <button className="absolute inset-y-0 right-0 pr-[0.45rem] flex items-center focus:outline-none">
+                <button className="absolute inset-y-0 right-0 pr-[0.45rem] flex items-center focus:outline-none group">
                     <svg
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-gray-200 stroke-2"
+                        className="h-6 w-6 text-gray-200 stroke-2 group-hover:fill-[#FF8958]"
                     >
                         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                         <g

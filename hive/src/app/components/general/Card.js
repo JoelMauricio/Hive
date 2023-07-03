@@ -68,14 +68,14 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         <div className='flex flex-col min-w-[100%] min-h-[100px] p-2 border-y border-y-[rgba(102,102,102,1)] hover:bg-[rgba(46,46,46,.3)]'  >
             < div className='flex' onClick={openPost}>
                 < div className='min-w-[10%]' >
-                    <Image className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' />
+                    <Image alt={`${User}'s profile photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
                 </div >
                 <div className='flex flex-col min-w-[90%] p-2 pr-4 gap-2'>
                     <span className='font-medium text-2xl'>{User}</span>
                     <p className='text-justify text-[12px]'>{Message}</p>
 
                     {HasImage ? <div className='w-full h-fit'>
-                        <Image className='aspect-auto w-full h-full' src={ImageSrc} width={450} height={450} />
+                        <Image alt={`${User}'s profile photo`} className='aspect-auto w-full h-full' src={ImageSrc} width={450} height={450} />
                     </div> : null}
                 </div>
             </div >

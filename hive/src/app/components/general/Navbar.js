@@ -19,7 +19,7 @@ export default function Navbar() {
             <div className='flex flex-col gap-5'>
                 {/* Seccion dle logo */}
                 <div className='flex w-full gap-2 items-center'>
-                    <Image src={logo} className='w-[4rem] h-[3rem]'></Image>
+                    <Image alt={`user photo`} src={logo} className='w-[4rem] h-[3rem]' width={500} height={500}></Image>
                     <span className='text-[1.90rem]'>HIVE</span>
                 </div>
                 {/* Menu */}

@@ -40,7 +40,7 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     return (<div className='flex flex-col min-w-[100%] h-fit py-1 px-2 '>
         < div className='flex '>
             < div className='min-w-[10%] items-center mx-auto' >
-                <Image className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' />
+                <Image alt={`${User}'s photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' width={500} height={500} />
             </div >
             <div className='flex flex-col min-w-[90%] gap-2 p-2 pr-4'>
                 <span className='font-medium text-[1rem]'>Write your thoughts...</span>

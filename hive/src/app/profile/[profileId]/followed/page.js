@@ -23,7 +23,7 @@ export default function Page({ params }) {
             <div className='grid grid-flow-row grid-cols-3 w-full h-full m-auto gap-2 p-2'>
                 {
                     placeholder.map((user, index) => (
-                        <UserCard2 key={index} UserId={user.userId} User={user.user} />
+                        <UserCard2 key={index} UserId={user.userId} User={user.user} Username={user.user} />
                     ))
                 }
             </div>

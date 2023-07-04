@@ -11,7 +11,7 @@ import IconSend from "@/app/icons/Send";
 
 
 
-export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc }) {
+export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc, Username }) {
     function NewComment({ PostId, UserId, User, Message, action }) {
         const [keyword, setKeyword] = useState("");
 
@@ -71,7 +71,10 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
                     <Image alt={`${User}'s profile photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
                 </div >
                 <div className='flex flex-col min-w-[90%] p-2 pr-4 gap-2'>
-                    <span className='font-medium text-2xl'>{User}</span>
+                    <div className='flex gap-2 items-baseline'>
+                        <span className='font-medium text-2xl'>{User}</span>
+                        <span className='font-medium text-sm'>{Username}</span>
+                    </div>
                     <p className='text-justify text-[12px]'>{Message}</p>
 
                     {HasImage ? <div className='w-full h-fit'>

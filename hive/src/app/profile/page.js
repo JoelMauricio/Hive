@@ -45,7 +45,7 @@ export default function Page() {
             <div>
                 {
                     placeholder.map((post, index) => (
-                        <Card key={index} UserId={post.userId} PostId={post.postId} User={post.user} Message={post.message} HasImage={post.hasImage} ImageSrc={post.imageSrc} />
+                        <Card key={index} UserId={post.userId} PostId={post.postId} User={post.user} Message={post.message} HasImage={post.hasImage} ImageSrc={post.imageSrc} Username={post.user} />
                     ))
                 }
             </div>

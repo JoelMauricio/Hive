@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 
 
-export default function UserCard2({ User, UserId }) {
+export default function UserCard2({ User, UserId, Username }) {
     const router = useRouter();
     const [followed, setFollowed] = useState("false");
     function openUser() { router.push(`/profile/${UserId}`) }
@@ -19,7 +19,10 @@ export default function UserCard2({ User, UserId }) {
                 <Image alt={`${User}'s photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-full h-full bg-white rounded-t-md' width={500} height={500} />
             </div >
             <div className='flex w-full items-center justify-between gap-4' >
-                <span className='font-medium text-2xl'>{User}</span>
+                <div className='flex flex-col'>
+                    <span className='font-medium text-xl'>{User}</span>
+                    <span className='font-medium text-sm'>{Username}</span>
+                </div>
                 <button className='focus:outline-none' onClick={followUser}><span className='text-[#FF9858] text-sm px-2'>{followed ? "Follow" : "Unfollow"}</span></button>
             </div>
         </div >

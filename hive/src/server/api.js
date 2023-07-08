@@ -3,6 +3,8 @@ const app = express();
 const port = 3000;
 
 // API modules
+
+//User modules
 const getUserData = require("./user/getuser.js");
 const registerUser = require("./user/register.js");
 const updateDisplay = require("./user/updatedisplay.js");
@@ -11,6 +13,8 @@ const updateAvatar = require("./user/updateavatar.js");
 const updatePassword = require("./user/updatepassword.js");
 const updateUsername = require("./user/updateusername.js");
 const updateEmail = require("./user/updateemail.js");
+
+// Post modules
 const createPost = require("./post/post.js");
 const replyPost = require("./post/reply.js");
 const likePost = require("./post/like.js");
@@ -18,7 +22,37 @@ const unlikePost = require("./post/unlike.js");
 const bookmarkPost = require("./post/bookmark.js");
 const unbookmarkPost = require("./post/unbookmark.js");
 
+// Follow modules
+const followUser = require("./follow/follow.js");
+const unfollowUser = require("./follow/unfollow.js");
+
 app.use(express.json());
+
+app.post("/api/set/follow", async (req, res) => {
+  try {
+    const { user, followed } = req.body;
+
+    const result = await followUser(user, followed);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+app.post("/api/remove/follow", async (req, res) => {
+  try {
+    const { user, followed } = req.body;
+
+    const result = await unfollowUser(user, followed);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
 
 app.post("/api/create/post", async (req, res) => {
   try {
@@ -191,8 +225,6 @@ app.post("/api/update/email", async (req, res) => {
   }
 });
 
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-

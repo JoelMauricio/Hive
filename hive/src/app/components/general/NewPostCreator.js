@@ -8,6 +8,7 @@ import IconPhotoDelete from '@/app/icons/PhotoIconDelete';
 
 export default function NewPost({ PostId, UserId, User, Message, HasImage, ImageSrc }) {
     const [keyword, setKeyword] = useState("");
+    const [selectedImage, setSelectedImage] = useState();
 
     const imageInput = useRef(null);
 
@@ -19,7 +20,6 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
         setKeyword("");
     }
 
-    const [selectedImage, setSelectedImage] = useState();
 
     // This function will be triggered when the file field change
     const imageChange = (e) => {
@@ -57,7 +57,7 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
                         accept="image/*"
                         type="file"
                         onChange={imageChange}
-                        style={{ display: "none" }}
+                        className='hidden'
                     />
 
                     {selectedImage && (
@@ -73,10 +73,10 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
                 <div className="flex h-fit w-full gap-2 justify-between focus:h-[85px]" >
 
                     {
-                        selectedImage === undefined ? <button on onClick={handleClick} className="group pr-[0.45rem] flex items-center justify-self-end focus:outline-none gap-2">
+                        selectedImage === undefined ? <button onClick={handleClick} className="group pr-[0.45rem] flex items-center justify-self-end focus:outline-none gap-2">
                             <IconPhoto className="group-hover:stroke-[#FF9858] h-auto w-[1.5rem]" />
                         </button>
-                            : <button on onClick={removeSelectedImage} className="group pr-[0.45rem] flex items-center justify-self-end focus:outline-none gap-2">
+                            : <button onClick={removeSelectedImage} className="group pr-[0.45rem] flex items-center justify-self-end focus:outline-none gap-2">
                                 <IconPhotoDelete className="group-hover:stroke-[#FF0518] h-auto w-[1.5rem]" />
                             </button>
                     }

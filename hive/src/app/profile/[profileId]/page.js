@@ -24,7 +24,7 @@ export default function Page({ params }) {
             <div className="relative flex border-b border-[rgba(102,102,102,1)]">
                 <div className=" w-[80%] p-2">
                     <div className="w-full">
-                        <UserImage />
+                        <UserImage User={params.profileId} />
                     </div>
                     <div>
                         <h1 className='font-bold text-[1.8rem] py-2'>{params.profileId}</h1>
@@ -42,7 +42,7 @@ export default function Page({ params }) {
                     </div>
                 </div>
             </div>
-            <h2 className='font-bold text-[1rem] px-2 py-4'>{params.profileId}'s posts</h2>
+            <h2 className='font-bold text-[1rem] px-2 py-4'>{params.profileId}&apos;s posts</h2>
             <div>
                 {
                     placeholder.map((post, index) => (

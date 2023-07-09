@@ -7,7 +7,7 @@ import NewPost from './components/general/NewPostCreator';
 export default function Home() {
 
   return (<>
-    <h1 className='font-bold text-[1.2rem] px-2'>What's new?</h1>
+    <h1 className='font-bold text-[1.2rem] px-2'>What&apos;s new?</h1>
     <NewPost />
     <div>
       {

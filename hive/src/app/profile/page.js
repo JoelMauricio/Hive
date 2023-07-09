@@ -41,7 +41,7 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            <h2 className='font-bold text-[1rem] px-2 py-4'>{user || "Usuario"}'s posts</h2>
+            <h2 className='font-bold text-[1rem] px-2 py-4'>{user || "Usuario"}&apos;s posts</h2>
             <div>
                 {
                     placeholder.map((post, index) => (

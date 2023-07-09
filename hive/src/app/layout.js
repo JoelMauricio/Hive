@@ -9,6 +9,7 @@ import { placeholder } from './constants'
 import AuthContextProvider from './context/authentication'
 import { useAuthContext } from './context/authentication'
 import { useRouter } from 'next/navigation';
+import supabase from './supabaseClient';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,11 +23,20 @@ export default function RootLayout({ children }) {
   const { profile, useProfile } = useAuthContext()
   const router = useRouter()
 
+  async function getStorage() {
+    const { data, error } = await supabase
+      .storage
+      .getBucket("Profiles")
+    console.log(data)
+  }
+
+
 
   if (profile !== undefined) {
     router.push("/login")
   }
 
+  getStorage()
   return (
     <html lang="en">
       <body className={inter.className}>

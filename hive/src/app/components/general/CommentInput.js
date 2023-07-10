@@ -10,7 +10,7 @@ export default function NewComment({ PostId, UserId, User, Message, action }) {
     }
 
     const makePost = () => {
-        setKeyword("");
+        console.log(keyword)
     }
 
 

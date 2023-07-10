@@ -30,14 +30,14 @@ export default function Page({ params }) {
 
     async function getfollows() {
         if (userPosts.length < 1) {
-            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", params.profileId)
+            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", params.profileId)
             setFollows(count)
         }
     }
 
     async function getfollowing() {
         if (userPosts.length < 1) {
-            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", params.profileId)
+            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", params.profileId)
             setFollowing(count)
         }
     }

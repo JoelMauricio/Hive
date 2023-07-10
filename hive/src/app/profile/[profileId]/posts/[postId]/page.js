@@ -2,6 +2,7 @@
 
 import Card from "@/app/components/general/Card"
 import CommentCard from "@/app/components/general/Comment"
+import NotResultsComp from "@/app/components/general/NoResultsComponent"
 import { placeholder } from "@/app/constants"
 import supabase from "@/app/supabaseClient"
 import { useState, useEffect } from "react"
@@ -9,7 +10,7 @@ import { useState, useEffect } from "react"
 export default function Page({ params }) {
     const [post_data, setPostData] = useState({})
     const [comments, setComments] = useState([])
-
+    const [isLoading, setLoading] = useState(true)
 
     async function getPostData() {
         if (post_data) {
@@ -26,21 +27,24 @@ export default function Page({ params }) {
         if (comments.length < 1) {
             const { data, error } = await supabase.from("tblreply").select("*,tbluser(*)").eq("post_id", params.postId)
             setComments(data)
+            setLoading(false)
         }
     }
 
     useEffect(() => {
+        setLoading(true)
         getPostData()
         getComments()
     }, [])
 
     return (<>
         <div className='grid w-full h-fit'>
+
             <Card User={post_data?.tbluser?.display_name} Username={post_data?.tbluser?.username} postId={post_data?.post_id} Message={post_data?.content} unclickable={true} />
         </div>
         <div className='grid w-full h-full items-center overflow-y-auto'>
             <div className='flex flex-col w-[80%] h-full m-auto gap-2'>
-                {
+                {comments.length < 1 ? <NotResultsComp CustomText={"There a no comments"} /> :
                     comments?.map((user, index) => (
                         <CommentCard key={index} User={user.tbluser.username} Message={user.content} UserId={user.tbluser.user_id} />
                     ))

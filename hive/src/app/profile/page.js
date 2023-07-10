@@ -61,6 +61,11 @@ export default function Page() {
         router.push(`/profile/${profile}/following`)
     }
 
+    async function getUserPhoto() {
+        const { data, error } = await supabase.storage.from("Profiles").getPublicUrl(`/UserPhotos/${profile}/avatar`)
+        setPhoto(data)
+    }
+
     useEffect(() => {
         setLoading(true)
         getfollowing()
@@ -73,7 +78,7 @@ export default function Page() {
             <div className="relative flex border-b border-[rgba(102,102,102,1)]">
                 <div className=" w-[80%] p-2">
                     <div className="w-full">
-                        <Image className='w-[125px] h-[125px] bg-white rounded-full' src={""} alt="user photo" height={500} width={500} />
+                        <Image className='w-[125px] h-[125px] bg-white rounded-full' src={user?.avatar_path} alt="user photo" height={500} width={500} priority placeholder="https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=" />
                     </div>
                     <div>
                         <h1 className='font-bold text-[1.8rem] py-2'>{user?.display_name}</h1>

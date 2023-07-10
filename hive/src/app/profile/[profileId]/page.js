@@ -30,14 +30,14 @@ export default function Page({ params }) {
 
     async function getfollows() {
         if (userPosts.length < 1) {
-            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", profile)
+            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", params.profileId)
             setFollows(count)
         }
     }
 
     async function getfollowing() {
         if (userPosts.length < 1) {
-            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", profile)
+            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", params.profileId)
             setFollowing(count)
         }
     }
@@ -51,11 +51,11 @@ export default function Page({ params }) {
     }
 
     function goToFolloweds() {
-        router.push(`/profile/${profile}/followed`)
+        router.push(`/profile/${params.profileId}/followed`)
     }
 
     function goToFollowing() {
-        router.push(`/profile/${profile}/following`)
+        router.push(`/profile/${params.profileId}/following`)
     }
 
     useEffect(() => {

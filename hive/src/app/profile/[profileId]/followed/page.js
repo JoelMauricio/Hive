@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import supabase from "@/app/supabaseClient"
 import { useAuthContext } from "@/app/context/authentication"
+import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
     const { profile } = useAuthContext()
@@ -14,7 +15,7 @@ export default function Page({ params }) {
     const [user, setUser] = useState(null)
     async function getUserData() {
         if (user == null) {
-            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", profile)
+            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", params.profileId)
             if (error) {
                 console.log(error)
             }
@@ -23,7 +24,7 @@ export default function Page({ params }) {
     }
 
     async function checkFollow(id) {
-        const { data, error } = await supabase.from("tblfollow").select("*").eq("followed", id).eq("follower", profile)
+        const { data, error } = await supabase.from("tblfollow").select("*").eq("followed", id).eq("follower", params.profileId)
         if (error) {
             console.log(error)
         }
@@ -33,7 +34,7 @@ export default function Page({ params }) {
     }
 
     async function getFollowed() {
-        const { data, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)").eq("followed", profile)
+        const { data, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)").eq("followed", params.profileId)
         if (error) {
             console.log(error)
         }
@@ -60,14 +61,14 @@ export default function Page({ params }) {
         </div>
         <h1 className='font-bold text-[1.2rem] px-2'>Followed</h1>
         <div className='grid w-full h-full overflow-y-auto'>
-            <div className='grid grid-flow-row grid-cols-3 w-full h-full m-auto gap-2 p-2'>
-                {
-                    followedAccounts?.map((user, index) => (
+            {isLoading ? <div className="p-2">Loading...</div> : followedAccounts.length < 1 ? <NotResultsComp CustomText={"This user does not have followers"} /> :
+                <div className='grid grid-flow-row grid-cols-3 w-full h-full m-auto gap-2 p-2'>
+                    {followedAccounts?.map((user, index) => (
                         <UserCard2 key={index} UserId={user.tbluser.user_id} User={user.tbluser.display_name} Username={user.tbluser.username} isFollowed={checkFollow(user.tbluser.user_id)} />
 
-                    ))
-                }
-            </div>
+                    ))}
+                </div>
+            }
         </div>
     </>)
 }

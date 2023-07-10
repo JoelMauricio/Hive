@@ -8,6 +8,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import supabase from "@/app/supabaseClient"
 import { useAuthContext } from "@/app/context/authentication"
+import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
     const { profile } = useAuthContext()
@@ -16,7 +17,7 @@ export default function Page({ params }) {
     const [user, setUser] = useState(null)
     async function getUserData() {
         if (user == null) {
-            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", profile)
+            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", params.profileId)
             if (error) {
                 console.log(error)
             }
@@ -26,7 +27,7 @@ export default function Page({ params }) {
     }
 
     async function getFollowing() {
-        const { data, error } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)").eq("follower", profile)
+        const { data, error } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)").eq("follower", params.profileId)
         if (error) {
             console.log(error)
         }
@@ -57,13 +58,13 @@ export default function Page({ params }) {
         </div>
         <h1 className='font-bold text-[1.2rem] px-2'>Following</h1>
         <div className='grid w-full h-full overflow-y-auto'>
-            <div className='grid grid-flow-row grid-cols-3 w-full h-full m-auto gap-2 p-2'>
-                {isLoading ? <div>Loading...</div> :
-                    followingAccounts?.map((user, index) => (
+            {isLoading ? <div className="p-2">Loading...</div> : followingAccounts.length < 1 ? <NotResultsComp CustomText={"This user does not follow any account"} /> :
+                <div className='grid grid-flow-row grid-cols-3 w-full h-full m-auto gap-2 p-2'>
+                    {followingAccounts?.map((user, index) => (
                         <UserCard2 key={index} UserId={user.tbluser.user_id} User={user.tbluser.display_name} Username={user.tbluser.username} isFollowed={true} />
-                    ))
-                }
-            </div>
+                    ))}
+                </div>
+            }
         </div>
     </>)
 }

@@ -8,7 +8,7 @@ export default function Page() {
 
     return (
         <div className="grid h-full w-full bg-[rgba(0,0,0,.2)] justify-center content-center">
-            <AuthComp destination={"/register"} title={"Sign In"} bt_text={"Log In"} list_holder={["Email", "Password"]} message={"Don`t have an account? "} msg_link={"Sign Up"} />
+            <AuthComp destination={"/login"} title={"Sign In"} bt_text={"Log In"} list_holder={["Email", "Password"]} message={"Don`t have an account? "} msg_link={"Sign Up"} />
         </div>
     )
 }

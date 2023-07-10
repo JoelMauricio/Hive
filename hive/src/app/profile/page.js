@@ -10,7 +10,7 @@ import supabase from "../supabaseClient"
 import NotResultsComp from "../components/general/NoResultsComponent"
 
 export default function Page() {
-    const { profile, useProfile } = useAuthContext()
+    const [ profile, useProfile ] = useAuthContext()
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setLoading] = useState(false)
     const router = useRouter();

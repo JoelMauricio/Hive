@@ -4,12 +4,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import supabase from "@/app/supabaseClient"
+import { useRouter } from "next/navigation"
 import { useAuthContext } from '@/app/context/authentication'
 
 export default function AuthComp({ title, list_holder, bt_text, destination, auth_type, message, msg_link }) {
+    const router = useRouter()
     const [EmailController, setEmailController] = useState("")
     const [PasswordController, setPasswordController] = useState("")
     const [PasswordConfirmController, setPasswordConfirmController] = useState("")
+    const [ profile, setProfile ] = useAuthContext()
 
     const handleEmail = (e) => {
         setEmailController(e.target.value)
@@ -60,8 +63,10 @@ export default function AuthComp({ title, list_holder, bt_text, destination, aut
       
           if (data.length > 0) {
             const userId = data[0].user_id;
-            console.log(userId);
+            setProfile(userId)
+            //console.log(profile)
             console.log('Login successful');
+            router.replace('/profile')
           } else {
             console.log('Invalid username or password');
           }

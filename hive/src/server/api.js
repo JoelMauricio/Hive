@@ -6,33 +6,33 @@ const app = express();
 const port = 8080;
 
 // Define the directories containing the modules
-const moduleDirs = ['user', 'post'];
+const myModuleDirs = ['user', 'post'];
 
 // Dynamically import modules from multiple directories
-moduleDirs.forEach((dir) => {
-  const moduleDirPath = path.join(__dirname, dir);
+myModuleDirs.forEach((dir) => {
+  const myModuleDirPath = path.join(__dirname, dir);
 
   // Check if the directory exists
-  if (fs.existsSync(moduleDirPath)) {
+  if (fs.existsSync(myModuleDirPath)) {
     // Get the directory contents
-    const files = fs.readdirSync(moduleDirPath);
+    const files = fs.readdirSync(myModuleDirPath);
 
     // Import and use the modules
     files.forEach((file) => {
-      const modulePath = path.join(moduleDirPath, file);
-      const module = require(modulePath);
+      const myModulePath = path.join(myModuleDirPath, file);
+      const myModule = require(myModulePath);
 
       // Check if the module is a valid middleware function or router
-      if (typeof module === 'function') {
-        app.use(module);
-      } else if (typeof module === 'object' && typeof module.router === 'function') {
-        app.use(module.router);
+      if (typeof myModule === 'function') {
+        app.use(myModule);
+      } else if (typeof myModule === 'object' && typeof myModule.router === 'function') {
+        app.use(myModule.router);
       } else {
-        console.error(`Invalid module in ${modulePath}. Skipping...`);
+        console.error(`Invalid module in ${myModulePath}. Skipping...`);
       }
     });
   } else {
-    console.error(`Module directory ${moduleDirPath} not found. Skipping...`);
+    console.error(`Module directory ${myModuleDirPath} not found. Skipping...`);
   }
 });
 

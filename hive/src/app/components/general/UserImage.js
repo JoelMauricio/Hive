@@ -7,6 +7,7 @@ import supabase from '@/app/supabaseClient';
 import { useAuthContext } from '@/app/context/authentication';
 
 export default function UserImage({ User, UserId }) {
+    const imageInput = useRef(null);
     const { profile, useProfile } = useAuthContext()
     const [selectedImage, setSelectedImage] = useState();
     if (profile != User) {
@@ -16,9 +17,6 @@ export default function UserImage({ User, UserId }) {
             </div>
         </>
     }
-
-    const imageInput = useRef(null);
-
 
     // This function will be triggered when the file field change
 

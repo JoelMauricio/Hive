@@ -14,7 +14,7 @@ export default function Page({ params }) {
     const [user, setUser] = useState(null)
     async function getUserData() {
         if (user == null) {
-            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", profile)
+            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", params.profileId)
             if (error) {
                 console.log(error)
             }
@@ -23,7 +23,7 @@ export default function Page({ params }) {
     }
 
     async function checkFollow(id) {
-        const { data, error } = await supabase.from("tblfollow").select("*").eq("followed", id).eq("follower", profile)
+        const { data, error } = await supabase.from("tblfollow").select("*").eq("followed", id).eq("follower", params.profileId)
         if (error) {
             console.log(error)
         }

@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import supabase from '@/app/supabaseClient'
+
 
 
 
@@ -9,8 +11,21 @@ export default function UserCard2({ User, UserId, Username, isFollowed = false }
     const router = useRouter();
     const [followed, setFollowed] = useState(isFollowed);
     function openUser() { router.push(`/profile/${UserId}`) }
-    function followUser() {
+    async function followUser() {
         setFollowed(!followed);
+        var user_id = 2
+        if (followed) {
+
+        }
+        else {
+            const { data, error } = await supabase
+            .from('tblfollow')
+            .insert([
+              { follower: user_id, followed: UserId },
+            ])
+            .select()
+          
+        }
     }
 
     return (

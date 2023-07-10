@@ -8,6 +8,8 @@ import IconBookmarkFill from '@/app/icons/Saved';
 import IconHeartFill from '@/app/icons/LikeFill';
 import { useRouter } from 'next/navigation';
 import IconSend from "@/app/icons/Send";
+import supabase from '@/app/supabaseClient'
+import { AuthContext, useAuthContext } from '@/app/context/authentication';
 
 
 
@@ -61,8 +63,36 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         }
     }
 
-    function likePost() { setLikeState(!likeState) }
-    function savePost() { setSaveState(!saveState) }
+    async function likePost() { 
+        var user_id = 2
+        setLikeState(!likeState)
+        if (likeState) {
+
+        }
+        else {
+            const { data, error } = await supabase
+            .from('tbllike')
+            .insert([
+              { user_liked: user_id, liked_post: PostId },
+            ])
+            .select()
+          
+        }
+    }
+    
+    async function savePost() { 
+        setSaveState(!saveState)
+        if (saveState == true) {
+            // Elimina
+        } else {
+            const { data, error } = await supabase
+            .from('tblbookmark')
+            .insert([
+              { user_bookmarked: 1, bookmarked_post: PostId },
+            ])
+            .select()
+        } 
+    }
     function openComment() { setCommenting(!isCommenting) }
     function openPost() { router.push(`/profile/${UserId}/posts/${PostId}`) }
 

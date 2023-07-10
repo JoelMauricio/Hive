@@ -12,7 +12,7 @@ export default function UserImage({ User, UserId }) {
     if (profile != User) {
         return <>
             <div className='w-[125px] h-[125px] rounded-full flex relative'>
-                <Image className='w-[125px] h-[125px] rounded-full self-center' src={selectedImage != undefined ? URL.createObjectURL(selectedImage) : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} alt="user photo" height={150} width={150} />
+                <Image className='w-[125px] h-[125px] rounded-full self-center' src={selectedImage ? URL.createObjectURL(selectedImage) : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} alt="user photo" height={150} width={150} />
             </div>
         </>
     }

@@ -10,6 +10,7 @@ import AuthContextProvider from './context/authentication'
 import { useAuthContext } from './context/authentication'
 import { useRouter } from 'next/navigation';
 import supabase from './supabaseClient';
+import SearchColumn from './components/general/SearchColumn';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,11 +24,8 @@ export default function RootLayout({ children }) {
   const { profile, useProfile } = useAuthContext()
   const router = useRouter()
 
-  async function getStorage() {
-    const { data, error } = await supabase
-      .storage
-      .getBucket("Profiles")
-    console.log(data)
+  async function getUsers() {
+    const { data, error } = await supabase.from("tbluser").select("*")
   }
 
 
@@ -36,7 +34,7 @@ export default function RootLayout({ children }) {
     router.push("/login")
   }
 
-  getStorage()
+  getUsers()
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -49,14 +47,7 @@ export default function RootLayout({ children }) {
                   {children}
                 </div>
                 <div className='min-h-screen w-[25%] flex flex-col px-3 py-5  justify-between'>
-                  <SearchBar text={"Search accounts"} className="mb-2" />
-                  <div className='flex flex-col w-full h-full overflow-y-auto mt-4 gap-2 last group'>
-                    {
-                      placeholder.map((user, index) => (
-                        <UserCard key={index} UserId={user.userId} User={user.user} Username={user.user} />
-                      ))
-                    }
-                  </div>
+                  <SearchColumn />
                 </div>
               </div >) :
                 (< div className='min-h-screen flex items-center border-[rgba(102,102,102,1)] overflow-y-auto'>

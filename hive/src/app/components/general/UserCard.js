@@ -5,9 +5,9 @@ import { useState } from 'react';
 
 
 
-export default function UserCard({ User, UserId, Username }) {
+export default function UserCard({ User, UserId, Username, isFollowed = false }) {
     const router = useRouter();
-    const [followed, setFollowed] = useState("false");
+    const [followed, setFollowed] = useState(isFollowed);
     function openUser() { router.push(`/profile/${UserId}`) }
     function followUser() {
         setFollowed(!followed);
@@ -18,7 +18,7 @@ export default function UserCard({ User, UserId, Username }) {
             < div className='flex w-full items-center justify-start gap-4' onClick={openUser}>
                 <Image alt={`${User}'s photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[40px] h-[40px] bg-white rounded-full' width={500} height={500} />
                 <div className='flex flex-col'>
-                    <span className='font-medium text-xl'>{User}</span>
+                    <span className='font-medium text-[.9rem]'>{User}</span>
                     <span className='font-medium text-sm'>{Username}</span>
                 </div>
             </div >

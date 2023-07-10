@@ -48,4 +48,4 @@ const SearchBar = ({ text, icon = true, onSearch }) => {
     );
 };
 
-export default SearchBar;
+export default { SearchBar };

@@ -1,23 +1,70 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import Card from "@/app/components/general/Card"
-import { placeholder } from "@/app/constants"
 import { useRouter } from "next/navigation"
 import UserImage from "@/app/components/general/UserImage"
+import { useAuthContext } from "@/app/context/authentication"
+import { useEffect, useState } from "react"
+import supabase from "@/app/supabaseClient"
+import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
+    const { profile, useProfile } = useAuthContext()
+    const [userPosts, setUserPosts] = useState([])
+    const [isLoading, setLoading] = useState(false)
+    const [follows, setFollows] = useState(0)
+    const [following, setFollowing] = useState(0)
     const router = useRouter();
-    var user, joinDate = undefined
+    const [user, setUser] = useState(null)
+
+    async function getUserData() {
+        if (user == null) {
+            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", params.profileId)
+            if (error) {
+                console.log(error)
+            }
+            setUser(data[0])
+        }
+    }
+
+    async function getfollows() {
+        if (userPosts.length < 1) {
+            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", profile)
+            setFollows(count)
+        }
+    }
+
+    async function getfollowing() {
+        if (userPosts.length < 1) {
+            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", profile)
+            setFollowing(count)
+        }
+    }
+
+    async function getUserPosts() {
+        if (userPosts.length < 1) {
+            const { data, error } = await supabase.from("tblpost").select("*,tbluser!tblpost_author_fkey(*)").eq("author", params.profileId)
+            setUserPosts(data)
+            setLoading(false)
+        }
+    }
 
     function goToFolloweds() {
-        router.push(`/profile/${params.profileId}/followed`)
+        router.push(`/profile/${profile}/followed`)
     }
 
     function goToFollowing() {
-        router.push(`/profile/${params.profileId}/following`)
+        router.push(`/profile/${profile}/following`)
     }
+
+    useEffect(() => {
+        setLoading(true)
+        getfollows()
+        getfollowing()
+        getUserData()
+        getUserPosts()
+    }, [])
 
     return (
         <div>
@@ -27,26 +74,26 @@ export default function Page({ params }) {
                         <UserImage User={params.profileId} />
                     </div>
                     <div>
-                        <h1 className='font-bold text-[1.8rem] py-2'>{params.profileId}</h1>
-                        <span className="text-[0.85rem]">joined on {joinDate || "00/00/0000"}</span>
+                        <h1 className='font-bold text-[1.8rem] py-2'>{user?.display_name}</h1>
+                        <span className="text-[0.85rem]">joined on {user?.joined?.split("T")[0]}</span>
                     </div>
                 </div>
                 <div className="absolute flex flex-col w-[20%] h-fit self-center p-4 gap-2 right-0 rounded-l-md border border-white" >
                     <div className="h-1/2 group pt-2 pl-2 rounded-tl-md" onClick={goToFolloweds}>
                         <h3 className="font-bold text-[1.2rem] group-hover:text-[#FF9858] text-end">Followed</h3>
-                        <h4 className="group-hover:text-[#FF9858] text-end">{user || 1000}</h4>
+                        <h4 className="group-hover:text-[#FF9858] text-end">{follows}</h4>
                     </div>
                     <div className="h-1/2 content-end group pb-2 pl-2 rounded-bl-md" onClick={goToFollowing}>
                         <h3 className="font-bold text-[1.2rem] group-hover:text-[#FF9858] text-end">Following</h3>
-                        <h4 className="group-hover:text-[#FF9858] text-end">{user || 1000}</h4>
+                        <h4 className="group-hover:text-[#FF9858] text-end">{following}</h4>
                     </div>
                 </div>
             </div>
-            <h2 className='font-bold text-[1rem] px-2 py-4'>{params.profileId}&apos;s posts</h2>
+            <h2 className='font-bold text-[1rem] px-2 py-4'>{user?.display_name}&apos;s posts</h2>
             <div>
-                {
-                    placeholder.map((post, index) => (
-                        <Card key={index} UserId={post.userId} PostId={post.postId} User={post.user} Message={post.message} HasImage={post.hasImage} ImageSrc={post.imageSrc} Username={post.user} />
+                {isLoading ? <div className="flex justify-center">Loading...</div> : userPosts.length < 1 ? <NotResultsComp userId={params.profileId} /> :
+                    userPosts?.map((post, index) => (
+                        <Card key={index} UserId={profile} PostId={post.post_id} User={post.tbluser.display_name} Message={post.content} HasImage={post.hasphoto} ImageSrc={post.photo} Username={post.tbluser.username} unclickable={false} />
                     ))
                 }
             </div>

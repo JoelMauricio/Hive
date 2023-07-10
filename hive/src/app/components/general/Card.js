@@ -11,7 +11,8 @@ import IconSend from "@/app/icons/Send";
 
 
 
-export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc, Username }) {
+export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc, Username, unclickable, isFavorite = false }) {
+
     function NewComment({ PostId, UserId, User, Message, action }) {
         const [keyword, setKeyword] = useState("");
 
@@ -45,13 +46,14 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
             </div >
         </div >);
     }
+    const [avatar, setAvatar] = useState(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${UserId}/avatar`);
 
 
     const router = useRouter();
     var actionHandler = false;
 
     const [likeState, setLikeState] = useState(false)
-    const [saveState, setSaveState] = useState(false)
+    const [saveState, setSaveState] = useState(isFavorite)
     const [isCommenting, setCommenting] = useState(false)
     function handleAction() {
         if (actionHandler) {
@@ -66,9 +68,9 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
 
     return (<>
         <div className='flex flex-col min-w-[100%] min-h-[100px] p-2 border-y border-y-[rgba(102,102,102,1)] hover:bg-[rgba(46,46,46,.3)]'  >
-            < div className='flex' onClick={openPost}>
+            < div className='flex' onClick={unclickable == false ? openPost : null}>
                 < div className='min-w-[10%]' >
-                    <Image alt={`${User}'s profile photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
+                    <Image alt={`${User}'s profile photo`} src={avatar || "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
                 </div >
                 <div className='flex flex-col min-w-[90%] p-2 pr-4 gap-2'>
                     <div className='flex gap-2 items-baseline'>

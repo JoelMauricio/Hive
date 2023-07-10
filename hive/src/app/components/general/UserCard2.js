@@ -5,9 +5,9 @@ import { useState } from 'react';
 
 
 
-export default function UserCard2({ User, UserId, Username }) {
+export default function UserCard2({ User, UserId, Username, isFollowed = false }) {
     const router = useRouter();
-    const [followed, setFollowed] = useState("false");
+    const [followed, setFollowed] = useState(isFollowed);
     function openUser() { router.push(`/profile/${UserId}`) }
     function followUser() {
         setFollowed(!followed);
@@ -23,7 +23,7 @@ export default function UserCard2({ User, UserId, Username }) {
                     <span className='font-medium text-xl'>{User}</span>
                     <span className='font-medium text-sm'>{Username}</span>
                 </div>
-                <button className='focus:outline-none' onClick={followUser}><span className='text-[#FF9858] text-sm px-2'>{followed ? "Follow" : "Unfollow"}</span></button>
+                <button className='focus:outline-none' onClick={followUser}><span className='text-[#FF9858] text-sm px-2'>{followed ? "Unfollow" : "Follow"}</span></button>
             </div>
         </div >
     );

@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import supabase from "@/app/supabaseClient"
 
 export default function AuthComp({ title, list_holder, bt_text, destination, message, msg_link }) {
     const [EmailController, setEmailController] = useState("")

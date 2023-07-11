@@ -4,7 +4,7 @@ import IconBookmark from "@/app/icons/save"
 import { useAuthContext } from "@/app/context/authentication"
 
 export default function NotResultsComp({ favorites = false, userId, CustomText }) {
-    const { profile } = useAuthContext()
+    const [profile] = useAuthContext()
     const iconFormat = "w-[4.5rem] h-[4.5rem]"
 
     return <div className="flex flex-col items-center p-8">

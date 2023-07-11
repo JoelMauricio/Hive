@@ -7,7 +7,7 @@ import { useAuthContext } from "../context/authentication"
 import NotResultsComp from "../components/general/NoResultsComponent"
 
 export default function Page() {
-    const { profile } = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [favorites, setFavorites] = useState([])
     const [isLoading, setLoading] = useState(false)
 

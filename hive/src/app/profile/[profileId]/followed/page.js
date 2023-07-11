@@ -8,7 +8,7 @@ import { useAuthContext } from "@/app/context/authentication"
 import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
-    const { profile } = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [isLoading, setLoading] = useState(true)
     const [followedAccounts, setFollowedAccounts] = useState([])
     const [followback, setfollowback] = useState([])

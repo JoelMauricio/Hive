@@ -1,14 +1,13 @@
 "use client"
 import IconPhoto from '@/app/icons/PhotoIcon';
 import Image from 'next/image'
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import supabase from '@/app/supabaseClient';
 import { useAuthContext } from '@/app/context/authentication';
 
 export default function UserImage({ User, UserId }) {
     const imageInput = useRef(null);
-    const { profile, useProfile } = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [selectedImage, setSelectedImage] = useState();
     if (profile != User) {
         return <>

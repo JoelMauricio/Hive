@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import Card from "../components/general/Card"
 import { useRouter } from "next/navigation"
 import { useAuthContext } from "../context/authentication"
@@ -10,7 +9,7 @@ import supabase from "../supabaseClient"
 import NotResultsComp from "../components/general/NoResultsComponent"
 
 export default function Page() {
-    const [ profile, useProfile ] = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setLoading] = useState(false)
     const router = useRouter();
@@ -30,14 +29,14 @@ export default function Page() {
 
     async function getfollows() {
         if (userPosts.length < 1) {
-            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", profile)
+            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", profile)
             setFollows(count)
         }
     }
 
     async function getfollowing() {
         if (userPosts.length < 1) {
-            const { count, error } = await supabase.from("tblfollow").select("*,tbluser!user_that_followed(*)", { count: "exact" }).eq("followed", profile)
+            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", profile)
             setFollowing(count)
         }
     }

@@ -1,13 +1,15 @@
 "use client"
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import InputBar from './CustomInput';
 import IconSend from "@/app/icons/Send";
 import IconPhoto from '@/app/icons/PhotoIcon';
 import IconPhotoDelete from '@/app/icons/PhotoIconDelete';
 import supabase from "@/app/supabaseClient"
+import { useAuthContext } from '@/app/context/authentication';
 
 export default function NewPost({ PostId, UserId, User, Message, HasImage, ImageSrc }) {
+
+    const [profile] = useAuthContext()
     const [keyword, setKeyword] = useState("");
     const [selectedImage, setSelectedImage] = useState();
 
@@ -20,11 +22,11 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     async function makePost() {
         var testjajaja = 1
         const { data, error } = await supabase
-        .from('tblpost')
-        .insert([
-          { author: testjajaja, content: keyword, photo: null, hasphoto: 0 },
-        ])
-        .select()
+            .from('tblpost')
+            .insert([
+                { author: testjajaja, content: keyword, photo: null, hasphoto: 0 },
+            ])
+            .select()
 
         setKeyword("");
     }

@@ -8,6 +8,7 @@ import { useAuthContext } from '@/app/context/authentication';
 export default function UserImage({ User, UserId }) {
     const imageInput = useRef(null);
     const [profile, useProfile] = useAuthContext()
+    const [avatar, setAvatar] = useState("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
     const [selectedImage, setSelectedImage] = useState();
     if (profile != User) {
         return <>
@@ -46,6 +47,20 @@ export default function UserImage({ User, UserId }) {
             })
     }
 
+    async function getUserPhoto() {
+        const { data, error } = await supabase.storage.from("Profiles").list(`UserPhotos/${User}`)
+        if (data[0]?.name == "avatar") {
+            setAvatar(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${User}/avatar`)
+        }
+        else {
+            setAvatar("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=")
+        }
+
+    }
+
+    useEffect(() => {
+        getUserPhoto()
+    }, [])
 
     return (
         <div className='w-[125px] h-[125px] rounded-full flex relative'>
@@ -59,7 +74,7 @@ export default function UserImage({ User, UserId }) {
             <div className='z-30 absolute flex w-[125px] h-[125px] rounded-full justify-center items-center transition-opacity ease-in-out opacity-0 hover:opacity-100' onClick={handleClick} >
                 <IconPhoto className='w-[65px] h-[65px] stroke-[#FF9858]' />
             </div>
-            <Image className='w-[125px] h-[125px] rounded-full self-center' src={selectedImage != undefined ? URL.createObjectURL(selectedImage) : "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} alt="user photo" height={150} width={150} />
+            <Image className='w-[125px] h-[125px] rounded-full self-center' src={selectedImage != undefined ? URL.createObjectURL(selectedImage) : avatar} alt="user photo" height={150} width={150} />
 
         </div>
     );

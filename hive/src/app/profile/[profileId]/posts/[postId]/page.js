@@ -37,7 +37,7 @@ export default function Page({ params }) {
     return (<>
         <div className='grid w-full h-fit'>
 
-            <Card PostId={post_data.post_id} User={post_data?.display_name} Username={post_data?.username} postId={post_data?.post_id} Message={post_data?.content} unclickable={true} />
+            <Card PostId={post_data.post_id} User={post_data?.display_name} UserId={post_data?.author} Username={post_data?.username} postId={post_data?.post_id} Message={post_data?.content} unclickable={true} />
         </div>
         <div className='grid w-full h-full items-center overflow-y-auto'>
             <div className='flex flex-col w-[80%] h-full m-auto gap-2'>

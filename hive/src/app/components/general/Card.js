@@ -3,13 +3,13 @@ import Image from 'next/image'
 import ChatIcon from "@/app/icons/ChatIcon"
 import IconHeart from '@/app/icons/Like';
 import IconBookmark from '@/app/icons/save';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import IconBookmarkFill from '@/app/icons/Saved';
 import IconHeartFill from '@/app/icons/LikeFill';
 import { useRouter } from 'next/navigation';
 import IconSend from "@/app/icons/Send";
 import supabase from '@/app/supabaseClient'
-import { AuthContext, useAuthContext } from '@/app/context/authentication';
+import { useAuthContext } from '@/app/context/authentication';
 
 
 
@@ -24,13 +24,16 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         }
 
         const makePost = () => {
-            setCommenting(!isCommenting);
             postReply()
             setKeyword("");
+            setCommenting(!isCommenting);
         }
 
 
         async function postReply() {
+            if (keyword == "") {
+                return
+            }
             const { data, error } = await supabase.from("tblreply").insert([{
                 author: profile, content: keyword, post_id: PostId
             }])
@@ -48,7 +51,7 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
                         value={keyword}
                         onChange={handleChange}
                         maxLength={250}
-                        className="shadow appearance-none resize-none overflow-hidden border-2 border-mainBlack rounded-md w-[100%] h-full py-2 px-2 text-[.8rem] break-words text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:h-[75px]"
+                        className="shadow appearance-none resize-none overflow-hidden border-2 border-mainBlack rounded-md w-[100%] h-full py-2 px-2 text-[.8rem] break-words text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
                     />
                 </div>
                 <div className="flex h-fit w-full gap-2 justify-end focus:h-[85px]" >
@@ -60,20 +63,30 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
             </div >
         </div >);
     }
-    const [avatar, setAvatar] = useState(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${UserId}/avatar`);
+    const [avatar, setAvatar] = useState("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
+
+
+    async function getUserPhoto() {
+        const { data, error } = await supabase.storage.from("Profiles").list(`UserPhotos/${UserId}`)
+        if (data[0]?.name == "avatar") {
+            setAvatar(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${UserId}/avatar`)
+        }
+        else {
+            setAvatar("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=")
+        }
+
+    }
+
+    useEffect(() => {
+        getUserPhoto()
+    }, [])
 
 
     const router = useRouter();
-    var actionHandler = false;
 
     const [likeState, setLikeState] = useState(false)
     const [saveState, setSaveState] = useState(isFavorite)
     const [isCommenting, setCommenting] = useState(false)
-    function handleAction() {
-        if (actionHandler) {
-            setCommenting(!isCommenting);
-        }
-    }
 
     async function likePost() {
         setLikeState(!likeState)
@@ -111,7 +124,7 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         <div className='flex flex-col min-w-[100%] min-h-[100px] p-2 border-y border-y-[rgba(102,102,102,1)] hover:bg-[rgba(46,46,46,.3)]'  >
             < div className='flex' onClick={unclickable == false ? openPost : null}>
                 < div className='min-w-[10%]' >
-                    <Image alt={`${User}'s profile photo`} src={avatar || "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
+                    <Image alt={`${User}'s profile photo`} src={avatar} className='w-[50px] h-[50px] bg-white rounded-full mx-auto mt-2 ' width={500} height={500} />
                 </div >
                 <div className='flex flex-col min-w-[90%] p-2 pr-4 gap-2'>
                     <div className='flex gap-2 items-baseline'>
@@ -138,7 +151,7 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         {
             isCommenting ?
                 <div className='flex flex-col min-w-[100%] min-h-[75px] pt-0 p-2 '>
-                    <NewComment action={actionHandler} />
+                    <NewComment />
                 </div>
                 : null
         }

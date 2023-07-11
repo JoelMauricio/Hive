@@ -8,10 +8,12 @@ import { useAuthContext } from "@/app/context/authentication"
 import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
-    const [profile, useProfile] = useAuthContext()
     const [isLoading, setLoading] = useState(true)
     const [followedAccounts, setFollowedAccounts] = useState([])
     const [followback, setfollowback] = useState([])
+    const [avatar, setAvatar] = useState("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
+
+
     const [user, setUser] = useState(null)
     async function getUserData() {
         if (user == null) {
@@ -20,6 +22,7 @@ export default function Page({ params }) {
                 console.log(error)
             }
             setUser(data[0])
+            getUserPhoto()
         }
     }
 
@@ -31,6 +34,16 @@ export default function Page({ params }) {
         if (data.length) {
             return true
         }
+    }
+    async function getUserPhoto() {
+        const { data, error } = await supabase.storage.from("Profiles").list(`UserPhotos/${params.profileId}`)
+        if (data[0]?.name == "avatar") {
+            setAvatar(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${params.profileId}/avatar`)
+        }
+        else {
+            setAvatar("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=")
+        }
+
     }
 
     async function getFollowed() {
@@ -51,7 +64,7 @@ export default function Page({ params }) {
         <div className="relative flex border-b border-[rgba(102,102,102,1)]">
             <div className=" w-[80%] p-2">
                 <div className="w-full">
-                    <Image className='w-[125px] h-[125px] bg-white rounded-full' src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} alt="user photo" height={500} width={500} />
+                    <Image className='w-[125px] h-[125px] bg-white rounded-full' src={avatar} alt="user photo" height={500} width={500} />
                 </div>
                 {isLoading ? <div>Loading...</div> :
                     <div>

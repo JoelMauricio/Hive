@@ -10,7 +10,7 @@ import { useAuthContext } from '@/app/context/authentication';
 
 export default function NewPost({ PostId, UserId, User, Message, HasImage, ImageSrc }) {
 
-    const { profile } = useAuthContext()
+    const [profile] = useAuthContext()
     const [keyword, setKeyword] = useState("");
     const [selectedImage, setSelectedImage] = useState();
 

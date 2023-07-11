@@ -10,7 +10,7 @@ import supabase from "@/app/supabaseClient"
 import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
-    const { profile, useProfile } = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [follows, setFollows] = useState(0)

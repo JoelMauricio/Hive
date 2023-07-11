@@ -6,8 +6,10 @@ import NotResultsComp from "@/app/components/general/NoResultsComponent"
 import { placeholder } from "@/app/constants"
 import supabase from "@/app/supabaseClient"
 import { useState, useEffect } from "react"
+import { useAuthContext } from "@/app/context/authentication"
 
 export default function Page({ params }) {
+    const [profile, useProfile] = useAuthContext()
     const [post_data, setPostData] = useState({})
     const [comments, setComments] = useState([])
     const [isLoading, setLoading] = useState(true)

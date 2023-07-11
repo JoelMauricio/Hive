@@ -1,8 +1,5 @@
 "use client"
 
-import Card from "@/app/components/general/Card"
-import CommentCard from "@/app/components/general/Comment"
-import { placeholder } from "@/app/constants"
 import UserCard2 from "@/app/components/general/UserCard2"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -11,7 +8,7 @@ import { useAuthContext } from "@/app/context/authentication"
 import NotResultsComp from "@/app/components/general/NoResultsComponent"
 
 export default function Page({ params }) {
-    const { profile } = useAuthContext()
+    const [profile, useProfile] = useAuthContext()
     const [isLoading, setLoading] = useState(true)
     const [followingAccounts, setFollowingAccounts] = useState([])
     const [user, setUser] = useState(null)

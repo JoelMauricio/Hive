@@ -1,7 +1,6 @@
 "use client"
 import IconPhoto from '@/app/icons/PhotoIcon';
 import Image from 'next/image'
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import supabase from '@/app/supabaseClient';
 import { useAuthContext } from '@/app/context/authentication';

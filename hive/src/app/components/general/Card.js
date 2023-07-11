@@ -14,8 +14,9 @@ import { AuthContext, useAuthContext } from '@/app/context/authentication';
 
 
 export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc, Username, unclickable, isFavorite = false }) {
+    const [profile, setProfile] = useAuthContext()
 
-    function NewComment({ PostId, UserId, User, Message, action }) {
+    function NewComment() {
         const [keyword, setKeyword] = useState("");
 
         const handleChange = (e) => {
@@ -24,7 +25,18 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
 
         const makePost = () => {
             setCommenting(!isCommenting);
+            postReply()
             setKeyword("");
+        }
+
+
+        async function postReply() {
+            const { data, error } = await supabase.from("tblreply").insert([{
+                author: profile, content: keyword, post_id: PostId
+            }])
+            if (error) {
+                console.log(error)
+            }
         }
 
 
@@ -49,9 +61,6 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         </div >);
     }
     const [avatar, setAvatar] = useState(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${UserId}/avatar`);
-    if (UserId == undefined ) {
-        setAvatar('https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=')
-    }
 
 
     const router = useRouter();
@@ -66,35 +75,34 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
         }
     }
 
-    async function likePost() { 
-        var user_id = 2
+    async function likePost() {
         setLikeState(!likeState)
         if (likeState) {
 
         }
         else {
             const { data, error } = await supabase
-            .from('tbllike')
-            .insert([
-              { user_liked: user_id, liked_post: PostId },
-            ])
-            .select()
-          
+                .from('tbllike')
+                .insert([
+                    { user_liked: profile, liked_post: PostId },
+                ])
+                .select()
+
         }
     }
-    
-    async function savePost() { 
+
+    async function savePost() {
         setSaveState(!saveState)
         if (saveState == true) {
             // Elimina
         } else {
             const { data, error } = await supabase
-            .from('tblbookmark')
-            .insert([
-              { user_bookmarked: 1, bookmarked_post: PostId },
-            ])
-            .select()
-        } 
+                .from('tblbookmark')
+                .insert([
+                    { user_bookmarked: 1, bookmarked_post: PostId },
+                ])
+                .select()
+        }
     }
     function openComment() { setCommenting(!isCommenting) }
     function openPost() { router.push(`/profile/${UserId}/posts/${PostId}`) }
@@ -111,7 +119,6 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
                         <span className='font-medium text-sm'>{Username}</span>
                     </div>
                     <p className='text-justify text-[12px]'>{Message}</p>
-
                     {HasImage ? <div className='w-full h-fit'>
                         <Image alt={`${User}'s profile photo`} className='aspect-auto w-full h-full' src={ImageSrc} width={450} height={450} />
                     </div> : null}

@@ -3,9 +3,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from './components/general/Navbar'
-import SearchBar from './components/general/Searchbar'
-import UserCard from './components/general/UserCard'
-import { placeholder } from './constants'
 import AuthContextProvider from './context/authentication'
 import { useAuthContext } from './context/authentication'
 import { useRouter } from 'next/navigation';

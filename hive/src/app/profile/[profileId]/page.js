@@ -14,13 +14,12 @@ export default function Page({ params }) {
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [follows, setFollows] = useState(0)
-    const [following, setFollowing] = useState(0)
     const router = useRouter();
     const [user, setUser] = useState(null)
 
     async function getUserData() {
         if (user == null) {
-            const { data, error } = await supabase.from("tbluser").select("*").eq("user_id", params.profileId)
+            const { data, error } = await supabase.from("vw_user_following").select("*").eq("user_id", params.profileId)
             if (error) {
                 console.log(error)
             }
@@ -35,16 +34,10 @@ export default function Page({ params }) {
         }
     }
 
-    async function getfollowing() {
-        if (userPosts.length < 1) {
-            const { error, count } = await supabase.from("tblfollow").select("*,tbluser!user_followed(*)", { count: "exact" }).eq("follower", params.profileId)
-            setFollowing(count)
-        }
-    }
 
     async function getUserPosts() {
         if (userPosts.length < 1) {
-            const { data, error } = await supabase.from("tblpost").select("*,tbluser!tblpost_author_fkey(*)").eq("author", params.profileId)
+            const { data, error } = await supabase.from("vw_post_info").select("*").eq("author", params.profileId)
             setUserPosts(data)
             setLoading(false)
         }
@@ -61,7 +54,6 @@ export default function Page({ params }) {
     useEffect(() => {
         setLoading(true)
         getfollows()
-        getfollowing()
         getUserData()
         getUserPosts()
     }, [])
@@ -85,7 +77,7 @@ export default function Page({ params }) {
                     </div>
                     <div className="h-1/2 content-end group pb-2 pl-2 rounded-bl-md" onClick={goToFollowing}>
                         <h3 className="font-bold text-[1.2rem] group-hover:text-[#FF9858] text-end">Following</h3>
-                        <h4 className="group-hover:text-[#FF9858] text-end">{following}</h4>
+                        <h4 className="group-hover:text-[#FF9858] text-end">{user?.following}</h4>
                     </div>
                 </div>
             </div>
@@ -93,7 +85,7 @@ export default function Page({ params }) {
             <div>
                 {isLoading ? <div className="flex justify-center">Loading...</div> : userPosts.length < 1 ? <NotResultsComp userId={params.profileId} /> :
                     userPosts?.map((post, index) => (
-                        <Card key={index} UserId={profile} PostId={post.post_id} User={post.tbluser.display_name} Message={post.content} HasImage={post.hasphoto} ImageSrc={post.photo} Username={post.tbluser.username} unclickable={false} />
+                        <Card key={index} UserId={profile} PostId={post.post_id} User={post.display_name} Message={post.content} HasImage={post.hasphoto} ImageSrc={post.photo} Username={post.username} unclickable={false} />
                     ))
                 }
             </div>

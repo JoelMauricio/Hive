@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import IconSend from "@/app/icons/Send";
 import IconPhoto from '@/app/icons/PhotoIcon';
 import IconPhotoDelete from '@/app/icons/PhotoIconDelete';
@@ -12,6 +12,7 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     const [profile] = useAuthContext()
     const [keyword, setKeyword] = useState("");
     const [selectedImage, setSelectedImage] = useState();
+    const [avatar, setAvatar] = useState("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
 
     const imageInput = useRef(null);
 
@@ -20,16 +21,30 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     }
 
     async function makePost() {
-        var testjajaja = 1
         const { data, error } = await supabase
             .from('tblpost')
             .insert([
-                { author: testjajaja, content: keyword, photo: null, hasphoto: 0 },
+                { author: profile, content: keyword, photo: null, hasphoto: 0 },
             ])
             .select()
 
         setKeyword("");
     }
+
+    async function getUserPhoto() {
+        const { data, error } = await supabase.storage.from("Profiles").list(`UserPhotos/${profile}`)
+        if (data[0]?.name == "avatar") {
+            setAvatar(`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/UserPhotos/${profile}/avatar`)
+        }
+        else {
+            setAvatar("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=")
+        }
+
+    }
+
+    useEffect(() => {
+        getUserPhoto()
+    }, [])
 
 
     // This function will be triggered when the file field change
@@ -51,7 +66,7 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     return (<div className='flex flex-col min-w-[100%] h-fit py-1 px-2 '>
         < div className='flex '>
             < div className='min-w-[10%] items-center mx-auto' >
-                <Image alt={`${User}'s photo`} src={"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="} className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' width={500} height={500} />
+                <Image alt={`${User}'s photo`} src={avatar} className='w-[50px] h-[50px] bg-red-200 rounded-full mx-auto mt-2' width={500} height={500} />
             </div >
             <div className='flex flex-col min-w-[90%] gap-2 p-2 pr-4'>
                 <span className='font-medium text-[1rem]'>Write your thoughts...</span>

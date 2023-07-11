@@ -1,12 +1,11 @@
 "use client"
 import Image from 'next/image';
-import { useId, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import InputBar from './CustomInput';
 import IconSend from "@/app/icons/Send";
 import IconPhoto from '@/app/icons/PhotoIcon';
 import IconPhotoDelete from '@/app/icons/PhotoIconDelete';
-import supabase from '@/app/supabaseClient';
-import { useAuthContext } from '@/app/context/authentication';
+import supabase from "@/app/supabaseClient"
 
 export default function NewPost({ PostId, UserId, User, Message, HasImage, ImageSrc }) {
 
@@ -17,28 +16,21 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     const imageInput = useRef(null);
 
     const handleChange = (e) => {
-        console.log(keyword)
         setKeyword(e.target.value);
     }
 
     async function makePost() {
         var testjajaja = 1
         const { data, error } = await supabase
-        .from('tblpost')
-        .insert([
-          { author: testjajaja, content: keyword, photo: null, hasphoto: 0 },
-        ])
-        .select()
+            .from('tblpost')
+            .insert([
+                { author: testjajaja, content: keyword, photo: null, hasphoto: 0 },
+            ])
+            .select()
+
         setKeyword("");
     }
 
-    const SaveImage = async () => {
-        const { data, error } = await supabase.storage.from("Profiles").upload(`PostPhotos/${profile}/${selectedImage.name}`, selectedImage, { cacheControl: '3600', upsert: true })
-        if (error) {
-            console.log(error)
-        }
-        console.log(data)
-    }
 
     // This function will be triggered when the file field change
     const imageChange = (e) => {

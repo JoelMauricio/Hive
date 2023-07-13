@@ -6,28 +6,28 @@ import { placeholder } from '@/app/constants';
 import NewPost from './components/general/NewPostCreator';
 import supabase from './supabaseClient';
 import { useEffect, useState, useRef } from 'react';
-import { debounce } from 'lodash';
+import { concat, debounce, round } from 'lodash';
 
 export default function Home() {
-  const PAGE_COUNT = 5
+  const [PAGE_COUNT, setPageCount] = useState(1)
   const containerRef = useRef(null)
   const [offset, setOffset] = useState(1)
   const [isInView, setIsInView] = useState(false)
   const [posts, setPosts] = useState([])
   const [isLoading, setLoading] = useState(false)
 
-  const handleScroll = (container) => {
-    if (containerRef.current && typeof window !== 'undefined') {
-      const container = containerRef.current
-      const { bottom } = container.getBoundingClientRect()
-      const { innerHeight } = window
-      setIsInView((prev) => bottom <= innerHeight)
+  const handleScroll = (height, offsetHght, current) => {
+    if (containerRef.current) {
+      let scrollbarHeight = height - offsetHght
+      setIsInView((prev) => current == scrollbarHeight)
     }
   }
 
   async function getPosts() {
+    const { count, error } = await supabase.from("vw_post_info").select("*", { count: "exact" })
+    setPageCount(Math.ceil(count / 5))
     if (posts?.length < 1) {
-      const { data, error } = await supabase.from("vw_post_info").select("*").limit(4)
+      const { data, error } = await supabase.from("vw_post_info").select("*").limit(5)
       setPosts(data)
       setLoading(false)
       if (error) {
@@ -38,13 +38,15 @@ export default function Home() {
 
   useEffect(() => {
     const handleDebouncedScroll = debounce(() => !isLast && handleScroll(), 200)
-    window.addEventListener('scroll', handleScroll)
+    containerRef.current?.addEventListener('scroll', (e) => { handleScroll(e.target.scrollHeight, e.target.offsetHeight, e.target.scrollTop) })
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      containerRef.current?.removeEventListener('scroll', (e) => { handleScroll(e.target.scrollHeight, e.target.offsetHeight) })
     }
   }, [])
 
   useEffect(() => {
+    console.log(PAGE_COUNT)
+
     if (isInView) {
       loadMorePosts(offset)
     }
@@ -57,32 +59,38 @@ export default function Home() {
 
   const loadMorePosts = async (offset) => {
     setOffset((prev) => prev + 1)
-    const { data: newPosts } = await fetchPosts(offset, PAGE_COUNT)
-    setPosts((...prevPosts) => [...prevPosts, newPosts])
+    try {
+
+      const { data: newPosts } = await fetchPosts(offset, PAGE_COUNT)
+    }
+    catch (error) {
+    }
   }
 
   const fetchPosts = async (offset) => {
-    const from = offset * PAGE_COUNT
-    const to = from + PAGE_COUNT - 1
+    const from = posts.length
+    const to = PAGE_COUNT * 5
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('vw_post_info')
       .select('*')
       .range(from, to)
-
-    return data
+    if (error) {
+      return
+    }
+    setPosts((posts) => concat(posts, data))
   }
 
 
   return (<>
     <h1 className='font-bold text-[1.2rem] px-2'>What&apos;s new?</h1>
     <NewPost />
-    <div className='overflow-y-auto h-fit' ref={containerRef}>
+    <div className='overflow-y-auto h-full' ref={containerRef} >
       {
         isLoading ? <p className='m-auto'>Loading...</p> : !posts ? <p>No profile data</p> :
 
-          posts.map((post, index) => (
-            <Card key={index} UserId={post.author} PostId={post.post_id} User={post.display_name} Message={post.content} HasImage={post.hasphoto} ImageSrc={post.photo} Username={post.username} unclickable={false} />
+          posts?.map((post, index) => (
+            <Card key={index} UserId={post?.author} PostId={post?.post_id} User={post?.display_name} Message={post?.content} HasImage={post?.hasphoto} ImageSrc={post?.photo} Username={post?.username} unclickable={false} />
           ))
       }
     </div>

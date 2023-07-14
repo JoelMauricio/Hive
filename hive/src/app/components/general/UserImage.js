@@ -10,6 +10,14 @@ export default function UserImage({ User, UserId }) {
     const [profile, useProfile] = useAuthContext()
     const [avatar, setAvatar] = useState("https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=");
     const [selectedImage, setSelectedImage] = useState();
+
+
+
+    useEffect(() => {
+        getUserPhoto()
+    }, [])
+
+
     if (profile != User) {
         return <>
             <div className='w-[125px] h-[125px] rounded-full flex relative'>
@@ -58,9 +66,6 @@ export default function UserImage({ User, UserId }) {
 
     }
 
-    useEffect(() => {
-        getUserPhoto()
-    }, [])
 
     return (
         <div className='w-[125px] h-[125px] rounded-full flex relative'>

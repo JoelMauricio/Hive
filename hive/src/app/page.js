@@ -45,8 +45,6 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    console.log(PAGE_COUNT)
-
     if (isInView) {
       loadMorePosts(offset)
     }

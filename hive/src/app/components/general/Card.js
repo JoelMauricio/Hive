@@ -133,7 +133,7 @@ export default function Card({ PostId, UserId, User, Message, HasImage, ImageSrc
                     </div>
                     <p className='text-justify text-[12px]'>{Message}</p>
                     {HasImage ? <div className='w-full h-fit'>
-                        <Image alt={`${User}'s profile photo`} className='aspect-auto w-full h-full' src={ImageSrc} width={450} height={450} />
+                        <Image alt={`${User}'s profile photo`} className='aspect-auto w-full h-full' src={`https://nbeavztkonchgnujeqve.supabase.co/storage/v1/object/public/Profiles/PostPhotos/${UserId}/${ImageSrc}`} width={450} height={450} />
                     </div> : null}
                 </div>
             </div >

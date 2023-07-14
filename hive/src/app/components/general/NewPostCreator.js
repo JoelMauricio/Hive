@@ -21,13 +21,34 @@ export default function NewPost({ PostId, UserId, User, Message, HasImage, Image
     }
 
     async function makePost() {
-        const { data, error } = await supabase
-            .from('tblpost')
-            .insert([
-                { author: profile, content: keyword, photo: null, hasphoto: 0 },
-            ])
-            .select()
+        if (selectedImage != null) {
+            // Subir post con imagen
+            const { data, error } = await supabase            
+                .from('tblpost')
+                .insert([
+                    { author: profile, content: keyword, photo: selectedImage.name, hasphoto: 1 },
+                ])
+                .select()
 
+            await supabase
+                .storage
+                .from('Profiles')
+                .upload(`PostPhotos/${profile}/${selectedImage.name}`, selectedImage, {
+                    cacheControl: '3600',
+                    upsert: true
+                })
+
+                
+        } else {
+            //Subir sin imagen
+            const { data, error } = await supabase
+                .from('tblpost')
+                .insert([
+                    { author: profile, content: keyword, photo: null, hasphoto: 0 },
+                ])
+                .select()            
+        }
+        setSelectedImage();
         setKeyword("");
     }
 
